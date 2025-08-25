@@ -1,0 +1,165 @@
+{
+  "info": {
+    "name": "PracticalWaha API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (tenant-scoped)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api","auth","login"] },
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\",\n  \"tenantId\": \"{{tenantId}}\"\n}" }
+          }
+        },
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "url": { "raw": "{{baseUrl}}/api/auth/signup", "host": ["{{baseUrl}}"], "path": ["api","auth","signup"] },
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"user1\",\n  \"password\": \"pass\",\n  \"fullName\": \"User One\",\n  \"email\": \"user1@example.com\",\n  \"tenantId\": \"{{tenantId}}\",\n  \"groupId\": \"{{groupId}}\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" } ],
+            "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] },
+            "body": { "mode": "raw", "raw": "{\n  \"username\": \"editor1\",\n  \"password\": \"pass\",\n  \"fullName\": \"Editor One\",\n  \"email\": \"editor1@example.com\",\n  \"groupId\": \"{{editorGroupId}}\"\n}" }
+          }
+        },
+        {
+          "name": "Assign Group",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" } ],
+            "url": { "raw": "{{baseUrl}}/api/users/{{userId}}/group", "host": ["{{baseUrl}}"], "path": ["api","users","{{userId}}","group"] },
+            "body": { "mode": "raw", "raw": "{\n  \"groupId\": \"{{groupId}}\"\n}" }
+          }
+        },
+        {
+          "name": "List Users",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/users", "host": ["{{baseUrl}}"], "path": ["api","users"] } }
+        },
+        {
+          "name": "List Groups",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/users/groups", "host": ["{{baseUrl}}"], "path": ["api","users","groups"] } }
+        }
+      ]
+    },
+    {
+      "name": "WhatsApp",
+      "item": [
+        {
+          "name": "Create Device (QR)",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" } ],
+            "url": { "raw": "{{baseUrl}}/api/whatsapp/devices", "host": ["{{baseUrl}}"], "path": ["api","whatsapp","devices"] },
+            "body": { "mode": "raw", "raw": "{\n  \"label\": \"device-1\"\n}" }
+          }
+        },
+        {
+          "name": "List Devices",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/whatsapp/devices", "host": ["{{baseUrl}}"], "path": ["api","whatsapp","devices"] } }
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{token}}" } ],
+            "url": { "raw": "{{baseUrl}}/api/whatsapp/send", "host": ["{{baseUrl}}"], "path": ["api","whatsapp","send"] },
+            "body": { "mode": "raw", "raw": "{\n  \"sessionId\": \"{{sessionId}}\",\n  \"to\": \"+19999999999\",\n  \"content\": \"Hello from WAHA!\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "Sync Contacts",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/contacts/sync?sessionId={{sessionId}}", "host": ["{{baseUrl}}"], "path": ["api","contacts","sync"], "query": [ { "key": "sessionId", "value": "{{sessionId}}" } ] } }
+        },
+        {
+          "name": "List Contacts",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/contacts", "host": ["{{baseUrl}}"], "path": ["api","contacts"] } }
+        }
+      ]
+    },
+    {
+      "name": "Chat Groups",
+      "item": [
+        {
+          "name": "Sync Groups",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/chat-groups/sync?sessionId={{sessionId}}", "host": ["{{baseUrl}}"], "path": ["api","chat-groups","sync"], "query": [ { "key": "sessionId", "value": "{{sessionId}}" } ] } }
+        },
+        {
+          "name": "List Groups",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/chat-groups", "host": ["{{baseUrl}}"], "path": ["api","chat-groups"] } }
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "List Messages",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{token}}" } ], "url": { "raw": "{{baseUrl}}/api/messages?limit=50", "host": ["{{baseUrl}}"], "path": ["api","messages"], "query": [ { "key": "limit", "value": "50" } ] } }
+        }
+      ]
+    },
+    {
+      "name": "Isolation Checks",
+      "item": [
+        {
+          "name": "Cross-tenant session (should 403)",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "Bearer {{tokenA}}" } ],
+            "url": { "raw": "{{baseUrl}}/api/contacts/sync?sessionId={{sessionB}}", "host": ["{{baseUrl}}"], "path": ["api","contacts","sync"], "query": [ { "key": "sessionId", "value": "{{sessionB}}" } ] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"should be 403\", function () {",
+                  "  pm.response.to.have.status(403);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "token", "value": "" },
+    { "key": "tokenA", "value": "" },
+    { "key": "tokenB", "value": "" },
+    { "key": "tenantId", "value": "" },
+    { "key": "groupId", "value": "" },
+    { "key": "editorGroupId", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "sessionId", "value": "" },
+    { "key": "sessionA", "value": "" },
+    { "key": "sessionB", "value": "" }
+  ]
+}
+
+

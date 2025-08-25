@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  backend:
+    build: .
+    container_name: whatsapp-backend
+    ports:
+      - '5001:5000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+      - waha
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/whatsapp-multi
+      - JWT_SECRET=your_jwt_secret
+      - WAHA_BASE_URL=http://waha:3000
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  waha:
+    image: devlikeapro/waha:latest
+    container_name: waha
+    ports:
+      - '3005:3000'
+    environment:
+      - WAHA_HTTP_PORT=3000
+      - WAHA_LOG_LEVEL=info
+
+volumes:
+  mongo-data:
